@@ -7,13 +7,19 @@ function App() {
 
   function handleClick() {
     const xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://api.example.com/data');
+    xhr.open('POST', 'https://arbufe49zb.execute-api.eu-north-1.amazonaws.com/V1/create');
+    to_send = {
+      "name" : "B",
+      "table_nr" : 1,
+      "tables" : "[\"qwe\"]",
+      "uuid" : "368ce544-2973-4240-8f93-2183497558ef"
+    }
     xhr.onload = function() {
       if (xhr.status === 200) {
         setData(JSON.parse(xhr.responseText));
       }
     };
-    xhr.send();
+    xhr.send(to_send);
   }
 
   return (
