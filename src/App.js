@@ -12,8 +12,19 @@ import LoginPage from './Components/LoginPage/login';
 import NavBar from './Components/Navbar';
 import SignupPage from './Components/SignupPage/signup';
 
+function getToken() {
+  const tokenString = sessionStorage.getItem('token');
+  const userToken = JSON.parse(tokenString);
+  return userToken;
+}
+
+function setToken(userToken) {
+  sessionStorage.setItem('token', JSON.stringify(userToken));
+}
+
 function App() {
   const [load, upadateLoad] = useState(null);
+  const token = getToken();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,6 +34,17 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  const To_display=()=>{
+    if(token){
+      return(
+        <>
+          A mers ok;
+        </>
+      )
+    }
+  }
+  
+
   return (
     <Router>
       <Preloader load={load} />
@@ -30,9 +52,10 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/Login" element={<LoginPage />} />
+          <Route path="/Login" exact element={<LoginPage setToken={setToken}/>}/>
           <Route path="/SignUp" element={<SignupPage />} />
         </Routes>
+        <To_display />
       </div>
     </Router>
   );
