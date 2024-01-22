@@ -1,50 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
-import React, { useState } from 'react';
+import HomePage from './Components/HomePage/home';
+import React, { useState, useEffect } from 'react';
+import Preloader from './Components/Pre';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate
+} from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import LoginPage from './Components/LoginPage/login';
+import NavBar from './Components/Navbar';
+import SignupPage from './Components/SignupPage/signup';
 
 function App() {
-  const [data, setData] = useState(null);
+  const [load, upadateLoad] = useState(null);
 
-  function handleClick() {
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://arbufe49zb.execute-api.eu-north-1.amazonaws.com/V1/create');
-    to_send = {
-      "name" : "B",
-      "table_nr" : 1,
-      "tables" : "[\"qwe\"]",
-      "uuid" : "368ce544-2973-4240-8f93-2183497558ef"
-    }
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        setData(JSON.parse(xhr.responseText));
-      }
-    };
-    xhr.send(to_send);
-  }
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      upadateLoad(false);
+    }, 1200);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Hello amplify
-        </a>
-
-        <div>
-        <button onClick={handleClick}>Get Data</button>
-        {data ? <div>{JSON.stringify(data)}</div> : <div>Loading...</div>}
-        </div>
-
-      </header>
-    </div>
+    <Router>
+      <Preloader load={load} />
+      <div id={load ? "no-scroll" : "scroll"}>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/Login" element={<LoginPage />} />
+          <Route path="/SignUp" element={<SignupPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
