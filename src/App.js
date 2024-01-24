@@ -15,7 +15,13 @@ import SignupPage from './Components/SignupPage/signup';
 function getToken() {
   const tokenString = sessionStorage.getItem('token');
   const userToken = JSON.parse(tokenString);
-  return userToken;
+  return userToken?.jwt;
+}
+
+function getUsername() {
+  const tokenString = sessionStorage.getItem('token');
+  const userToken = JSON.parse(tokenString);
+  return userToken?.name;
 }
 
 function setToken(userToken) {
@@ -25,6 +31,7 @@ function setToken(userToken) {
 function App() {
   const [load, upadateLoad] = useState(null);
   const token = getToken();
+  const username = getUsername();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -34,28 +41,27 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  const To_display=()=>{
+  const Hello_Message=()=>{
     if(token){
       return(
         <>
-          A mers ok;
+          Hello, {username}
         </>
       )
     }
   }
-  
 
   return (
     <Router>
       <Preloader load={load} />
       <div id={load ? "no-scroll" : "scroll"}>
         <NavBar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/Login" exact element={<LoginPage setToken={setToken}/>}/>
-          <Route path="/SignUp" element={<SignupPage />} />
-        </Routes>
-        <To_display />
+        <Hello_Message />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/Login" exact element={<LoginPage setToken={setToken}/>}/>
+            <Route path="/SignUp" element={<SignupPage />} />
+          </Routes>
       </div>
     </Router>
   );
