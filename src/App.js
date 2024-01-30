@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginPage from './Components/LoginPage/login';
 import NavBar from './Components/Navbar';
 import SignupPage from './Components/SignupPage/signup';
+import Blog from './Components/Blog/Blog'
 
 function getToken() {
   const tokenString = sessionStorage.getItem('token');
@@ -61,6 +62,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/Login" exact element={<LoginPage setToken={setToken}/>}/>
             <Route path="/SignUp" element={<SignupPage />} />
+            <Route path="/Blog" element={<Blog />} />
           </Routes>
       </div>
     </Router>
