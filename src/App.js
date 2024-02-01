@@ -1,4 +1,3 @@
-import HomePage from './Components/HomePage/home';
 import React, { useState, useEffect } from 'react';
 import Preloader from './Components/Pre';
 import {
@@ -8,10 +7,11 @@ import {
   Navigate
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LoginPage from './Components/LoginPage/login';
 import NavBar from './Components/Navbar';
-import SignupPage from './Components/SignupPage/signup';
+import SignUp from './Components/SignupPage/SignUp';
 import Blog from './Components/Blog/Blog'
+import SignIn from './Components/LoginPage/SignIn';
+import Dashboard from './Components/Dashboard/Dashboard'
 
 function getToken() {
   const tokenString = sessionStorage.getItem('token');
@@ -59,9 +59,9 @@ function App() {
         <NavBar />
         <Hello_Message />
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/Login" exact element={<LoginPage setToken={setToken}/>}/>
-            <Route path="/SignUp" element={<SignupPage />} />
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/Login" exact element={<SignIn setToken={setToken}/>}/>
+            <Route path="/SignUp" element={<SignUp />} />
             <Route path="/Blog" element={<Blog />} />
           </Routes>
       </div>

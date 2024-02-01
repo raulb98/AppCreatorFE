@@ -7,9 +7,9 @@ function NavBar() {
     <>
       <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+          <Navbar.Brand href="#home">AppCreator Project</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/">Dashboard</Nav.Link>
             <Nav.Link href="/Login">Login</Nav.Link>
             <Nav.Link href="/Signup">SignUp</Nav.Link>
             <Nav.Link href="/Blog">Blog</Nav.Link>
