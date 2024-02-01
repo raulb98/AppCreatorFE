@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './Components/Navbar';
-import SignUp from './Components/SignupPage/SignUp';
 import Blog from './Components/Blog/Blog'
 import SignIn from './Components/LoginPage/SignIn';
 import Dashboard from './Components/Dashboard/Dashboard'
@@ -61,7 +60,6 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/Login" exact element={<SignIn setToken={setToken}/>}/>
-            <Route path="/SignUp" element={<SignUp />} />
             <Route path="/Blog" element={<Blog />} />
           </Routes>
       </div>
