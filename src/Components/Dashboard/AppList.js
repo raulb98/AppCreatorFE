@@ -14,7 +14,7 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Orders({data}) {
+export default function Orders() {
   const [isLoading, setLoading] = React.useState(false);
   
   async function GetAppsForUser() {
@@ -45,10 +45,10 @@ export default function Orders({data}) {
 
   var data = GetAppsForUser();
   data.then( result => {
-    if(result && !isLoading && !rows.find((element) => element.name == result.name))
+    if(result && !isLoading)
     {
-      rows.push(result);
       setLoading(true);
+      rows.push(result);
       console.log(rows);
     }
   });
