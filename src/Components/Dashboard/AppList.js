@@ -17,16 +17,14 @@ function preventDefault(event) {
 
 export default function AppList({my_tab}) {
     const [isLoading, setLoading] = React.useState(false);
-    const [dataToReadApps, setDataToReadApps] = React.useState({});
 
     React.useEffect(() => {
         const cookie = new Cookies();
         const token = cookie.get("jwt");
         const username = cookie.get("email");
-        const foreign_key = cookie.get("fk");
         const fetchData = async () => {
             try {
-                const login_resp = await BackendService.read_apps(username, token, foreign_key);
+                const login_resp = await BackendService.read_apps(username, token);
                 if (login_resp.status == 200) {
                     setLoading(true);
                     rows.push(login_resp.data);
@@ -68,23 +66,5 @@ export default function AppList({my_tab}) {
                 </Table>
             </React.Fragment>
         );
-    } else {
-        return (
-            <React.Fragment>
-                <Title>Applications</Title>
-                <Table size="small">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell align="right"></TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody></TableBody>
-                </Table>
-            </React.Fragment>
-        )
     }
 }

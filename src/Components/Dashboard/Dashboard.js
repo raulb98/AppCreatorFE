@@ -110,7 +110,7 @@ export default function Dashboard() {
     }
   } 
 
-  async function handleAppsClick() {
+  async function handleAppsClick() { // ASTA TREBUIE TRECUT IN SERVICES
     const tokenString = sessionStorage.getItem('token');
     const userToken = JSON.parse(tokenString);
     const token = userToken?.jwt;
