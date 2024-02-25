@@ -11,17 +11,18 @@ import NavBar from './Components/Navbar';
 import Blog from './Components/Blog/Blog'
 import SignIn from './Components/LoginPage/SignIn';
 import Dashboard from './Components/Dashboard/Dashboard'
+import Cookies from 'universal-cookie';
 
 function getToken() {
-  const tokenString = sessionStorage.getItem('token');
-  const userToken = JSON.parse(tokenString);
-  return userToken?.jwt;
+  const cookie = new Cookies();
+  const email = cookie.get("email");
+  return email;
 }
 
 function getUsername() {
-  const tokenString = sessionStorage.getItem('token');
-  const userToken = JSON.parse(tokenString);
-  return userToken?.name;
+  const cookie = new Cookies();
+  const email = cookie.get("email");
+  return email;
 }
 
 function setToken(userToken) {

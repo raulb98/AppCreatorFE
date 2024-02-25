@@ -9,23 +9,22 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 
 export const mainListItems = (
-  <React.Fragment>
-    <ListItemButton>
-      <ListItemIcon>
-      </ListItemIcon>
-      <ListItemText id="Create Application" primary="Create Application" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText id="Dashboard" primary="Dashboard" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText id="Orders" primary="Orders" />
-    </ListItemButton>
-  </React.Fragment>
+    <React.Fragment>
+        <ListItemButton>
+            <ListItemIcon></ListItemIcon>
+            <ListItemText id="Create Application" primary="Create Application"/>
+        </ListItemButton>
+        <ListItemButton>
+            <ListItemIcon>
+                <DashboardIcon/>
+            </ListItemIcon>
+            <ListItemText id="Dashboard" primary="Dashboard"/>
+        </ListItemButton>
+        <ListItemButton>
+            <ListItemIcon>
+                <ShoppingCartIcon/>
+            </ListItemIcon>
+            <ListItemText id="Orders" primary="Orders"/>
+        </ListItemButton>
+    </React.Fragment>
 );
