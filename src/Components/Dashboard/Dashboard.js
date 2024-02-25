@@ -18,6 +18,8 @@ import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useRef } from 'react';
+import Orders from './Orders';
+import Cookies from 'universal-cookie';
 
 // function Copyright(props) {
 //   return (
@@ -115,7 +117,7 @@ export default function Dashboard() {
     const username = userToken?.name;
     const foreign_key = userToken?.foreign_key;
     
-    return fetch('https://arbufe49zb.execute-api.eu-north-1.amazonaws.com/V1/create', {
+    return fetch('http://127.0.0.1:8080/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -130,10 +132,39 @@ export default function Dashboard() {
   };
 
 
+  const DisplayCreateOrderTabs=()=> {
+    const cookie = new Cookies();
+    const token = cookie.get("jwt");
+    if(token && (tab == 3)){
+      return(
+            <Tabs
+                defaultActiveKey="profile"
+                id="uncontrolled-tab-example"
+                className="mb-3"
+            >
+                <Tab eventKey="OrderCreate" title="OrderCreateButton">
+                    <Form>
+                        <Form.Group className="mb-3" controlId="Order">
+                            <Form.Label>Order</Form.Label>
+                            <Form.Control type="text" placeholder="Enter Order"/>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="AppDescription">
+                            <Form.Label>Description</Form.Label>
+                            <Form.Control as="textarea" rows={3} />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                                Create Oder
+                        </Button>
+                    </Form>
+                </Tab>
+            </Tabs>
+        )
+    }
+  }
+
    const DisplayCreateTabs=()=> {
-    const tokenString = sessionStorage.getItem('token');
-    const userToken = JSON.parse(tokenString);
-    const token = userToken?.jwt;
+    const cookie = new Cookies();
+    const token = cookie.get("jwt");
     if(token && (tab == 1)){
 
       return(
@@ -163,9 +194,8 @@ export default function Dashboard() {
   }
 
   const DisplayPaperPrimary=()=>{
-    const tokenString = sessionStorage.getItem('token');
-    const userToken = JSON.parse(tokenString);
-    const token = userToken?.jwt;
+    const cookie = new Cookies();
+    const token = cookie.get("jwt");
     if(token && (tab == 1)){
         return(
               <Grid item xs={12} md={8} lg={9}>
@@ -184,9 +214,8 @@ export default function Dashboard() {
   }
 
   const DisplayPaperSecondary=()=>{
-    const tokenString = sessionStorage.getItem('token');
-    const userToken = JSON.parse(tokenString);
-    const token = userToken?.jwt;
+    const cookie = new Cookies();
+    const token = cookie.get("jwt");
     if(token && (tab == 1)){
         return(
           <Grid item xs={12} md={4} lg={3}>
@@ -205,10 +234,22 @@ export default function Dashboard() {
   }
 
   const DisplayPaperTertiary=()=>{
-    const tokenString = sessionStorage.getItem('token');
-    const userToken = JSON.parse(tokenString);
-    const token = userToken?.jwt;
+    const cookie = new Cookies();
+    const token = cookie.get("jwt");
     if(token && (tab == 1)){
+        return(
+          <Grid item xs={12}>
+          <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+          </Paper>
+        </Grid>
+        )
+    }
+  }
+
+  const DisplayOrders=()=>{
+    const cookie = new Cookies();
+    const token = cookie.get("jwt");
+    if(token && (tab == 3)){
         return(
           <Grid item xs={12}>
           <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
@@ -261,9 +302,11 @@ export default function Dashboard() {
               <DisplayPaperPrimary />
               {/* Recent Deposits */}
               <DisplayPaperSecondary />
-                  <AppList />
+                  <AppList my_tab={tab}/>
               {/* Recent Orders */}
               <DisplayPaperTertiary />
+                  <Orders my_tab={tab}/>
+              <DisplayCreateOrderTabs />
               </Grid>
           </Container>
         </Box>
