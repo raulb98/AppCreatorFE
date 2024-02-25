@@ -28,10 +28,9 @@ class BackendService {
         });
     };
 
-    read_apps(this_username, this_token, this_foreign_key) {
+    read_apps(this_username, this_token) {
         return axios.post(READ_APPS_URL, {
-            email: this_username,
-            foreign_key: this_foreign_key
+            email: this_username
         }, {
             headers: {
                 'Content-Type': 'multipart/json',

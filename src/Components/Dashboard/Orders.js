@@ -14,7 +14,7 @@ function preventDefault(event) {
 }
 
 export default function Orders({my_tab}) {
-  const [isLoading, setLoading] = React.useState(false);
+    const [isLoading, setLoading] = React.useState(false);
     
     React.useEffect(() => {
         const cookie = new Cookies();
@@ -55,22 +55,5 @@ export default function Orders({my_tab}) {
         </Table>
       </React.Fragment>
     );
-  }
-  else
-  {
-    return(
-      <React.Fragment>
-      <Title>Orders</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell align="right"></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-        </TableBody>
-      </Table>
-    </React.Fragment>
-    )
   }
 }
