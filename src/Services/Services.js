@@ -51,6 +51,17 @@ class BackendService {
             }
         });
     };
+
+    read_orders(this_app_key, this_token) {
+        return axios.post(READ_ORDER_URL, {
+            app_key: this_app_key
+        }, {
+            headers: {
+                'Content-Type': 'multipart/json',
+                'Authorization': 'Bearer ' + this_token
+            }
+        });
+    };
 };
 
 export default new BackendService();
