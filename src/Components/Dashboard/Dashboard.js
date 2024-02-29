@@ -20,6 +20,7 @@ import Form from 'react-bootstrap/Form';
 import { useRef } from 'react';
 import Orders from './Orders';
 import Cookies from 'universal-cookie';
+import OrdersDisplayForm from './Orders_Display_Form';
 
 // function Copyright(props) {
 //   return (
@@ -131,38 +132,7 @@ export default function Dashboard() {
       }).then(data => data.json())
   };
 
-
-  const DisplayCreateOrderTabs=()=> {
-    const cookie = new Cookies();
-    const token = cookie.get("jwt");
-    if(token && (tab == 3)){
-      return(
-            <Tabs
-                defaultActiveKey="profile"
-                id="uncontrolled-tab-example"
-                className="mb-3"
-            >
-                <Tab eventKey="OrderCreate" title="OrderCreateButton">
-                    <Form>
-                        <Form.Group className="mb-3" controlId="Order">
-                            <Form.Label>Order</Form.Label>
-                            <Form.Control type="text" placeholder="Enter Order"/>
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="AppDescription">
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control as="textarea" rows={3} />
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
-                                Create Oder
-                        </Button>
-                    </Form>
-                </Tab>
-            </Tabs>
-        )
-    }
-  }
-
-   const DisplayCreateTabs=()=> {
+  const DisplayCreateTabs=()=> {
     const cookie = new Cookies();
     const token = cookie.get("jwt");
     if(token && (tab == 1)){
@@ -170,7 +140,7 @@ export default function Dashboard() {
       return(
             <Tabs
                 defaultActiveKey="profile"
-                id="uncontrolled-tab-example"
+                id="CreateAppTabs"
                 className="mb-3"
             >
                 <Tab eventKey="AppCreator" title="AppCreatorButton">
@@ -298,15 +268,17 @@ export default function Dashboard() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <DisplayCreateTabs />
             <Grid container spacing={3}>
-              {/* Chart */}
-              <DisplayPaperPrimary />
-              {/* Recent Deposits */}
-              <DisplayPaperSecondary />
+               <DisplayPaperPrimary />
+                <DisplayPaperSecondary />
                   <AppList my_tab={tab}/>
-              {/* Recent Orders */}
-              <DisplayPaperTertiary />
-                  <Orders my_tab={tab}/>
-              <DisplayCreateOrderTabs />
+                <DisplayPaperTertiary />
+              </Grid>
+              <Grid container spacing={2}>
+                <Orders my_tab={tab}/>
+                <Grid xs={10} md={10}>
+                  <OrdersDisplayForm my_tab={tab}/>
+                </Grid>
+                <DisplayOrders />
               </Grid>
           </Container>
         </Box>
