@@ -8,6 +8,8 @@ import TableRow from '@mui/material/TableRow';
 import Title from './Title';
 import BackendService from "../../Services/Services"
 import Cookies from 'universal-cookie';
+import Paper from '@mui/material/Paper';
+import TableContainer from '@mui/material/TableContainer';
 
 let rows = [];
 
@@ -41,29 +43,29 @@ export default function AppList({my_tab}) {
     if (isLoading && (my_tab == 1)) {
         return (
             <React.Fragment>
-                <Title>Applications</Title>
-                <Table size="small">
+                <TableContainer component={Paper}>
+                    <Title>Applications</Title>
+                    <Table sx={{ minWidth: 200 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell align="right"></TableCell>
+                            <TableCell >App Name</TableCell>
+                            <TableCell >Nr Tables</TableCell>
+                            <TableCell >Tables</TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>
-                        {
-                            rows.map((row) => (
-                                <TableRow key={row.name}>
-                                    <TableCell>{row.name}</TableCell>
-                                    <TableCell>{row.table_nr}</TableCell>
-                                    <TableCell>{row.tables}</TableCell>
-                                </TableRow>
-                            ))
-                        }
-                    </TableBody>
-                </Table>
+                        <TableBody>
+                            {
+                                rows.map((row) => (
+                                    <TableRow>
+                                        <TableCell >{row.name}</TableCell>
+                                        <TableCell >{row.table_nr}</TableCell>
+                                        <TableCell >{row.tables}</TableCell>
+                                    </TableRow>
+                                ))
+                            }
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </React.Fragment>
         );
     }

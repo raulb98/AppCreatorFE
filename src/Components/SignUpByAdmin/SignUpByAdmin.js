@@ -19,26 +19,10 @@ import {useNavigate} from "react-router-dom";
 import BackendService from "../../Services/Services"
 import Cookies from 'universal-cookie';
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
-
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function SignUpByAdmin() {
     const [isSubmit, setIsSubmit] = useState(false);
-    const [userLogindata, setUserLogindata] = useState(
-        {password: "", email: ""}
-    );
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -60,18 +44,8 @@ export default function SignIn() {
         if (isSubmit) {
             const fetchData = async () => {
                 try {
-                    const login_resp = await BackendService.login(
-                        userLogindata["email"],
-                        userLogindata["foreign_key"],
-                        sha256(userLogindata["password"]).toString()
-                    );
-                    if (login_resp.status == 200) {
-                        console.log(login_resp.data["foreign_key"]);
-                        cookies.set("fk", userLogindata["foreign_key"]);
-                        cookies.set("email", userLogindata["email"]);
-                        cookies.set("jwt", login_resp.data["token"]);
-                        navigate("/");
-                    }
+
+                    
                 } catch (error) {
                     setIsSubmit(false);
                 }
@@ -137,8 +111,6 @@ export default function SignIn() {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright
-                    sx={{mt: 8,mb: 4}}/>
             </Container>
         </ThemeProvider>
     );
