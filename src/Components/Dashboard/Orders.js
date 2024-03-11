@@ -21,20 +21,6 @@ function preventDefault(event) {
 
 export default function Orders({my_tab}) {
     const [isLoading, setLoading] = React.useState(false);
-    
-
-    /*
-       {
-          Object.keys(row[4]).map((key, index) => ( 
-            <TableCell align="right">{key} | {row[4][key]}</TableCell> 
-          ))
-        } 
-    */
-
-    const displayOrder = (event) => {
-      const id = event.currentTarget.getAttribute("data-rowid");
-      console.log(id);
-    };
 
      React.useEffect(() => {
       if(!isLoading)
@@ -48,7 +34,6 @@ export default function Orders({my_tab}) {
                if(login_resp.status == 200)
                {
                    setLoading(true);
-                   //console.log(login_resp.data);
                    for(var index = 0; index < login_resp.data.length; index++)
                    {
                       var found_item = false;
@@ -60,7 +45,6 @@ export default function Orders({my_tab}) {
                       if (!found_item)
                       orders_row.push(login_resp.data[index]);
                    }
-                   console.log(orders_row);
                }
 
          }catch( error ){ console.log(error); }
@@ -89,7 +73,7 @@ export default function Orders({my_tab}) {
           <TableBody>
               {
                   orders_row.map((row) => (
-                    <TableRow key={row[0]} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                         <TableCell align="right">{row[1]}</TableCell>
                         <TableCell align="right">{row[3]}</TableCell>
                         <TableCell align="right">{row[2]}</TableCell>

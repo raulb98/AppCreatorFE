@@ -17,43 +17,17 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { TextField } from '@mui/material';
 import { useRef } from 'react';
 import Orders from './Orders';
 import Cookies from 'universal-cookie';
 import OrdersDisplayForm from './Orders_Display_Form';
+import DisplayCreateTabs from './DisplayCreateTabs';
+import StocksDisplayForm from './Stocks_Display_Form'
+import Stocks from './Stocks';
 
-// function Copyright(props) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
 
 const drawerWidth = 240;
-
-// const AppBar = styled(MuiAppBar, {
-//   shouldForwardProp: (prop) => prop !== 'open',
-// })(({ theme, open }) => ({
-//   zIndex: theme.zIndex.drawer + 1,
-//   transition: theme.transitions.create(['width', 'margin'], {
-//     easing: theme.transitions.easing.sharp,
-//     duration: theme.transitions.duration.leavingScreen,
-//   }),
-//   ...(open && {
-//     marginLeft: drawerWidth,
-//     width: `calc(100% - ${drawerWidth}px)`,
-//     transition: theme.transitions.create(['width', 'margin'], {
-//       easing: theme.transitions.easing.sharp,
-//       duration: theme.transitions.duration.enteringScreen,
-//     }),
-//   }),
-// }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -81,140 +55,40 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
+
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function Dashboard() {
-  const [open, setOpen] = React.useState(true);
-  const [tab, setTab] = React.useState(true);
-  const appName = useRef(undefined);
-  const description = useRef(undefined);
+    const [open, setOpen] = React.useState(true);
+    const [tab, setTab] = React.useState(true);
 
 
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
+    const toggleDrawer = () => {
+      setOpen(!open);
+    };
 
-  const toggleRubric = (event) => {
-    event.preventDefault();
-    if(event.target.innerHTML == "Create Application")
-    {
-        setTab(1);
-    }
-    else if(event.target.innerHTML == "Dashboard")
-    {
-        setTab(2);
-    }
-    else if(event.target.innerHTML == "Orders")
-    {
-        setTab(3);
-    }
-  } 
-
-  async function handleAppsClick() { // ASTA TREBUIE TRECUT IN SERVICES
-    const tokenString = sessionStorage.getItem('token');
-    const userToken = JSON.parse(tokenString);
-    const token = userToken?.jwt;
-    const username = userToken?.name;
-    const foreign_key = userToken?.foreign_key;
-    
-    return fetch('http://127.0.0.1:8080/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name : username,
-          app_name: appName.current.value,
-          token: token,
-          foreign_key : foreign_key
-        })
-      }).then(data => data.json())
-  };
-
-  const DisplayCreateTabs=()=> {
-    const cookie = new Cookies();
-    const token = cookie.get("jwt");
-    if(token && (tab == 1)){
-
-      return(
-            <Tabs
-                defaultActiveKey="profile"
-                id="CreateAppTabs"
-                className="mb-3"
-            >
-                <Tab eventKey="AppCreator" title="AppCreatorButton">
-                    <Form onSubmit={handleAppsClick}>
-                        <Form.Group className="mb-3" controlId="AppName">
-                            <Form.Label>Application Name</Form.Label>
-                            <Form.Control type="text" placeholder="Enter Application Name" ref={appName} />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="AppDescription">
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control as="textarea" rows={3} ref={description} />
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
-                                Create
-                        </Button>
-                    </Form>
-                </Tab>
-            </Tabs>
-        )
-    }
-  }
-
-  const DisplayPaperPrimary=()=>{
-    const cookie = new Cookies();
-    const token = cookie.get("jwt");
-    if(token && (tab == 1)){
-        return(
-              <Grid item xs={12} md={8} lg={9}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    height: 240,
-                  }}
-                >
-                </Paper>
-              </Grid>
-        )
-    }
-  }
-
-  const DisplayPaperSecondary=()=>{
-    const cookie = new Cookies();
-    const token = cookie.get("jwt");
-    if(token && (tab == 1)){
-        return(
-          <Grid item xs={12} md={4} lg={3}>
-          <Paper
-            sx={{
-              p: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              height: 240,
-            }}
-          >
-          </Paper>
-        </Grid>
-        )
-    }
-  }
-
-  const DisplayPaperTertiary=()=>{
-    const cookie = new Cookies();
-    const token = cookie.get("jwt");
-    if(token && (tab == 1)){
-        return(
-          <Grid item xs={12}>
-          <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-          </Paper>
-        </Grid>
-        )
-    }
-  }
+    const toggleRubric = (event) => {
+      event.preventDefault();
+      if(event.target.innerHTML == "Create Application")
+      {
+          setTab(1);
+      }
+      else if(event.target.innerHTML == "Stocks")
+      {
+          setTab(2);
+      }
+      else if(event.target.innerHTML == "Orders")
+      {
+          setTab(3);
+      }
+    } 
 
   const DisplayOrders=()=>{
     const cookie = new Cookies();
@@ -266,20 +140,34 @@ export default function Dashboard() {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <DisplayCreateTabs />
-            <Grid container spacing={3}>
-               <DisplayPaperPrimary />
-                <DisplayPaperSecondary />
-                  <AppList my_tab={tab}/>
-                <DisplayPaperTertiary />
+            <Grid container spacing={2}>
+              <Grid item xs={8}>
+                 <Item>
+                    <DisplayCreateTabs tab={tab}/>
+                 </Item>
+                 <Item>
+                    <AppList my_tab={tab}/>
+                  </Item>
               </Grid>
+           </Grid>
               <Grid container spacing={2}>
                 <Orders my_tab={tab}/>
                 <Grid xs={10} md={10}>
+                  <br/>
                   <OrdersDisplayForm my_tab={tab}/>
                 </Grid>
                 <DisplayOrders />
               </Grid>
+              <Grid container spacing={4}>
+                <Grid xs={10}>
+                  <Item>
+                    <Stocks my_tab={tab}/>
+                  </Item>
+                  <Item>
+                    <StocksDisplayForm my_tab={tab}/>
+                  </Item>
+                </Grid>
+             </Grid>
           </Container>
         </Box>
       </Box>

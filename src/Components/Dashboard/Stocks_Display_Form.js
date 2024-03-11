@@ -8,7 +8,7 @@ import { TextField } from '@mui/material';
 import BackendService from "../../Services/Services"
 
 
-export default function OrdersDisplayForm({my_tab}) {
+export default function StocksDisplayForm({my_tab}) {
     const [isSubmit, setIsSubmit] = React.useState(false);
     const [inputFields, setInputFields] = React.useState([
         { Item: '', Quantity: '' }
@@ -44,15 +44,15 @@ export default function OrdersDisplayForm({my_tab}) {
         if (isSubmit) {
         const fetchData = async () => {
         try{
-                var order = {};
+                var stocks = {};
                 for (var index = 0; index < inputFields.length; index++)
                 {
-                    order[inputFields[index].Item] = Number(inputFields[index].Quantity);
+                    stocks[inputFields[index].Item] = Number(inputFields[index].Quantity);
                 }
-                const login_resp = await BackendService.create_order(ak, intermediate.current.value, order, token);
+                const login_resp = await BackendService.create_stocks(ak, stocks, token);
                 if(login_resp.status == 200)
                 {
-                   setIsSubmit(false);
+                    setIsSubmit(false);  
                 }
           }catch( error ){ setIsSubmit(false); console.log(error); }
           };
@@ -62,29 +62,18 @@ export default function OrdersDisplayForm({my_tab}) {
 
     const cookie = new Cookies();
     const token = cookie.get("jwt");
-    if(token && (my_tab == 3)){
+    if(token && (my_tab == 2)){
       return(
             <Tabs
                 defaultActiveKey="profile"
-                id="orderTab"
+                id="stockTab"
                 className="mb-3"
             >
-                <Tab eventKey="OrderCreate" title="OrderCreateButton">
+                <Tab eventKey="StockCreate" title="StockCreateButton">
                     <Form>
-                        <TextField
-                                required
-                                fullWidth
-                                id="Intermediate"
-                                label="Intermediate"
-                                name="Intermediate"
-                                type="Intermediate"
-                                margin='normal'
-                                inputRef={intermediate}
-                                color={"info"}
-                            />
-                        <Button onClick={addFields}>Insert Product</Button>
+                        <Button onClick={addFields}>Insert Stock</Button>
                         <Button onClick={handleOrder} variant="primary" type="submit">
-                                Create Order
+                                Create Stock
                         </Button>
                         {inputFields.map((input, index) => {
                             return (

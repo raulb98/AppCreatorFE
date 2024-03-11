@@ -7,7 +7,6 @@ const READ_APPS_URL = "http://127.0.0.1:8080/read_apps"
 const CREATE_CLIENT_URL = "http://127.0.0.1:8080/create_client"
 const READ_CLIENT_URL = "http://127.0.0.1:8080/read_client"
 const DELETE_USER_URL = "http://127.0.0.1:8080/delete_client"
-const READ_CLIENT_KEY_URL = "http://127.0.0.1:8080/read_client_key"
 const LOGIN_URL = "http://127.0.0.1:8080/login"
 const CREATE_STOCKS_URL = "http://127.0.0.1:8080/create_stocks"
 const READ_STOCK_URL = "http://127.0.0.1:8080/read_stock"
@@ -16,6 +15,20 @@ const CREATE_ORDER_URL = "http://127.0.0.1:8080/create_order"
 const READ_ORDER_URL = "http://127.0.0.1:8080/read_order"
 
 class BackendService {
+
+    create_app(this_email, this_app_name, this_description, this_token) {
+        return axios.post(CREATE_APP_URL, {
+            email: this_email,
+            desc: this_description,
+            app_name: this_app_name
+        }, {
+            headers: {
+                'Content-Type': 'multipart/json',
+                'Authorization': 'Bearer ' + this_token
+            }
+        });
+    };
+
     login(this_username, this_user_key, this_sha_pass) {
         return axios.post(LOGIN_URL, {
             email: this_username,
@@ -62,6 +75,29 @@ class BackendService {
             }
         });
     };
+
+    read_stocks(this_app_key, this_token){
+        return axios.post(READ_STOCK_URL, {
+            app_key: this_app_key
+        }, {
+            headers: {
+                'Content-Type': 'multipart/json',
+                'Authorization': 'Bearer ' + this_token
+            }
+        });
+    }
+
+    create_stocks(this_app_key, this_stocks, this_token){
+        return axios.post(CREATE_STOCKS_URL, {
+            app_key: this_app_key,
+            stocks: this_stocks
+        }, {
+            headers: {
+                'Content-Type': 'multipart/json',
+                'Authorization': 'Bearer ' + this_token
+            }
+        });
+    }
 };
 
 export default new BackendService();
