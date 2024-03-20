@@ -90,19 +90,6 @@ export default function Dashboard() {
       }
     } 
 
-  const DisplayOrders=()=>{
-    const cookie = new Cookies();
-    const token = cookie.get("jwt");
-    if(token && (tab == 3)){
-        return(
-          <Grid item xs={12}>
-          <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-          </Paper>
-        </Grid>
-        )
-    }
-  }
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -156,16 +143,13 @@ export default function Dashboard() {
                   <br/>
                   <OrdersDisplayForm my_tab={tab}/>
                 </Grid>
-                <DisplayOrders />
               </Grid>
-              <Grid container spacing={4}>
-                <Grid xs={10}>
+              <Grid container spacing={2}>
+                <Grid xs={10} md={10}>
                   <Item>
                     <Stocks my_tab={tab}/>
                   </Item>
-                  <Item>
                     <StocksDisplayForm my_tab={tab}/>
-                  </Item>
                 </Grid>
              </Grid>
           </Container>

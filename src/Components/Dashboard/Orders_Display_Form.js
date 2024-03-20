@@ -4,9 +4,8 @@ import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Cookies from 'universal-cookie';
-import { TextField } from '@mui/material';
-import BackendService from "../../Services/Services"
-
+import { TextField, Alert } from '@mui/material';
+import BackendService from "../../Services/Services";
 
 export default function OrdersDisplayForm({my_tab}) {
     const [isSubmit, setIsSubmit] = React.useState(false);
@@ -14,6 +13,9 @@ export default function OrdersDisplayForm({my_tab}) {
         { Item: '', Quantity: '' }
     ]);
     const intermediate = React.useRef(undefined);
+    const [alertMessage, setAlertMessage] = React.useState('');
+    const [alertOpen, setAlertOpen] = React.useState(false);
+    const [alertSeverity, setAlertSeverity] = React.useState('success');
 
     const addFields = () => {
         let newfield = { Item: '', Quantity: '' }
@@ -37,6 +39,11 @@ export default function OrdersDisplayForm({my_tab}) {
         setIsSubmit(true);
     };
 
+    const handleAlertClose = (event, reason) => {
+        console.log("Aici22!!!");
+        setAlertOpen(false);
+    };
+
      React.useEffect(() => {
         const cookie = new Cookies();
         const token = cookie.get("jwt");
@@ -49,10 +56,21 @@ export default function OrdersDisplayForm({my_tab}) {
                 {
                     order[inputFields[index].Item] = Number(inputFields[index].Quantity);
                 }
-                const login_resp = await BackendService.create_order(ak, intermediate.current.value, order, token);
-                if(login_resp.status == 200)
+                const order_resp = await BackendService.create_order(ak, intermediate.current.value, order, token);
+                if(order_resp.status == 200)
                 {
                    setIsSubmit(false);
+                   setAlertMessage('Order Set!');
+                   setAlertSeverity('success');
+                   setAlertOpen(true);
+                }
+                else if(order_resp.status == 201)
+                {
+                    setIsSubmit(false);
+                    console.log("Aici!!");
+                    setAlertMessage("Something went bad!");
+                    setAlertOpen(true);
+                    setAlertSeverity('error');
                 }
           }catch( error ){ setIsSubmit(false); console.log(error); }
           };
@@ -71,6 +89,17 @@ export default function OrdersDisplayForm({my_tab}) {
             >
                 <Tab eventKey="OrderCreate" title="OrderCreateButton">
                     <Form>
+                        { alertOpen == true ?
+                            <Alert
+                                severity={alertSeverity}
+                                onClose={handleAlertClose}
+                                open={alertOpen}
+                                sx={{ mt: 2 }}
+                                >
+                                {alertMessage}
+                            </Alert>
+                            : <br/>
+                        }
                         <TextField
                                 required
                                 fullWidth
