@@ -4,7 +4,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Cookies from 'universal-cookie';
-import { TextField } from '@mui/material';
+import { TextField, Alert } from '@mui/material';
 import BackendService from "../../Services/Services"
 
 
@@ -14,6 +14,9 @@ export default function StocksDisplayForm({my_tab}) {
         { Item: '', Quantity: '' }
     ]);
     const intermediate = React.useRef(undefined);
+    const [alertMessage, setAlertMessage] = React.useState('');
+    const [alertOpen, setAlertOpen] = React.useState(false);
+    const [alertSeverity, setAlertSeverity] = React.useState('success');
 
     const addFields = () => {
         let newfield = { Item: '', Quantity: '' }
@@ -37,6 +40,10 @@ export default function StocksDisplayForm({my_tab}) {
         setIsSubmit(true);
     };
 
+    const handleAlertClose = (event, reason) => {
+        setAlertOpen(false);
+    };
+
      React.useEffect(() => {
         const cookie = new Cookies();
         const token = cookie.get("jwt");
@@ -49,10 +56,20 @@ export default function StocksDisplayForm({my_tab}) {
                 {
                     stocks[inputFields[index].Item] = Number(inputFields[index].Quantity);
                 }
-                const login_resp = await BackendService.create_stocks(ak, stocks, token);
-                if(login_resp.status == 200)
+                const stock_resp = await BackendService.create_stocks(ak, stocks, token);
+                if(stock_resp.status == 200)
                 {
-                    setIsSubmit(false);  
+                    setIsSubmit(false);
+                    setAlertMessage('Stock Set!');
+                    setAlertSeverity('success');
+                    setAlertOpen(true);
+                }
+                else if (stock_resp.status == 503)
+                {
+                    setIsSubmit(false);
+                    setAlertMessage('Stock Failed to Update!');
+                    setAlertSeverity('error');
+                    setAlertOpen(true);
                 }
           }catch( error ){ setIsSubmit(false); console.log(error); }
           };
@@ -71,6 +88,17 @@ export default function StocksDisplayForm({my_tab}) {
             >
                 <Tab eventKey="StockCreate" title="StockCreateButton">
                     <Form>
+                        { alertOpen == true ?
+                                <Alert
+                                    severity={alertSeverity}
+                                    onClose={handleAlertClose}
+                                    open={alertOpen}
+                                    sx={{ mt: 2 }}
+                                    >
+                                    {alertMessage}
+                                </Alert>
+                                : <br/>
+                        }
                         <Button onClick={addFields}>Insert Stock</Button>
                         <Button onClick={handleOrder} variant="primary" type="submit">
                                 Create Stock
