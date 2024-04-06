@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Link from '@mui/material/Link';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,6 +10,7 @@ import Cookies from 'universal-cookie';
 import Paper from '@mui/material/Paper';
 import TableContainer from '@mui/material/TableContainer';
 import GutterlessList from '../Tools/GutterlessList';
+import StocksDisplayForm from './Stocks_Display_Form';
 
 let stocks_row = [];
 
@@ -18,11 +18,12 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Stocks({my_tab}) {
+export default function Stocks({stock_created, create_stock_trigger}) {
     const [isLoading, setLoading] = React.useState(false);
-
+    
+     console.log(stock_created);
      React.useEffect(() => {
-      if(!isLoading)
+      if((!isLoading && (stocks_row.length == 0)) || (stock_created == true))
       {
        const cookie = new Cookies();
        const token = cookie.get("jwt");
@@ -33,6 +34,7 @@ export default function Stocks({my_tab}) {
                if(stocks_resp.status == 200)
                {
                    setLoading(true);
+                   create_stock_trigger();
                    if(stocks_resp != null)
                    {
                         stocks_row = Object.keys(stocks_resp.data)
@@ -40,25 +42,24 @@ export default function Stocks({my_tab}) {
                    }
                }
 
-         }catch( error ){ console.log(error); }
+         }catch( error ){ console.log(error);}
          };
          fetchDataRead().then();
       }
-   }, [isLoading]);
+   }, [isLoading, stock_created]);
 
   
-  if(isLoading && (my_tab == 2))
+  if(isLoading || (stocks_row.length != 0))
   {
     return (
-      <React.Fragment>
+      <React.Fragment >
         <Title>Stocks</Title>
         <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 200 }} aria-label="simple table">
+        <Table aria-label="simple table">
         <TableHead>
             <TableRow>
               <TableCell>Display Stocks</TableCell>
-              <TableCell>TimeStamps</TableCell>
-
+              <TableCell>Date Time</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -67,7 +68,7 @@ export default function Stocks({my_tab}) {
                     row.map((element => 
                             <TableRow>
                                 <TableCell><GutterlessList data={element[0]} /></TableCell>
-                                <TableCell>{element[1]}</TableCell>
+                                <TableCell xs={{marginRight: -1}}>{element[1]}</TableCell>
                             </TableRow>
                         ))
                     ))
