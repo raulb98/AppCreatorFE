@@ -13,7 +13,7 @@ import TableContainer from '@mui/material/TableContainer';
 import { Button } from '@mui/material';
 import GutterlessList from '../Tools/GutterlessList';
 
-let orders_row = []
+let orders_row = [];
 
 function preventDefault(event) {
   event.preventDefault();
@@ -30,20 +30,14 @@ export default function Orders({my_tab}) {
        const ak = cookie.get('ak');
        const fetchDataRead = async () => {
        try{
-               const login_resp = await BackendService.read_orders(ak, token);
-               if(login_resp.status == 200)
+               const order_resp = await BackendService.read_orders(ak, token);
+               if(order_resp.status == 200)
                {
                    setLoading(true);
-                   for(var index = 0; index < login_resp.data.length; index++)
+                   if(orders_row != null)
                    {
-                      var found_item = false;
-                      for(var jdx = 0; jdx < orders_row.length; jdx++)
-                      {
-                        if(login_resp.data[index] === orders_row[jdx])
-                          found_item = true;
-                      }
-                      if (!found_item)
-                      orders_row.push(login_resp.data[index]);
+                      orders_row = Object.keys(order_resp.data)
+                                    .map(key => order_resp.data[key]);
                    }
                }
 

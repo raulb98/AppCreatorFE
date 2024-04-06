@@ -7,8 +7,7 @@ import Cookies from 'universal-cookie';
 import { TextField, Alert } from '@mui/material';
 import BackendService from "../../Services/Services"
 
-
-export default function StocksDisplayForm({my_tab}) {
+export default function StocksDisplayForm({create_stock_trigger}) {
     const [isSubmit, setIsSubmit] = React.useState(false);
     const [inputFields, setInputFields] = React.useState([
         { Item: '', Quantity: '' }
@@ -62,6 +61,7 @@ export default function StocksDisplayForm({my_tab}) {
                     setIsSubmit(false);
                     setAlertMessage('Stock Set!');
                     setAlertSeverity('success');
+                    create_stock_trigger();
                     setAlertOpen(true);
                 }
                 else if (stock_resp.status == 503)
@@ -79,7 +79,7 @@ export default function StocksDisplayForm({my_tab}) {
 
     const cookie = new Cookies();
     const token = cookie.get("jwt");
-    if(token && (my_tab == 2)){
+    if(token){
       return(
             <Tabs
                 defaultActiveKey="profile"

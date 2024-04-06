@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './Components/Navbar';
 import Blog from './Components/Blog/Blog'
 import SignIn from './Components/LoginPage/SignIn';
-import Dashboard from './Components/Dashboard/Dashboard'
+import MyToolbar from './Components/Dashboard/Toolbar';
 import Cookies from 'universal-cookie';
 
 function getUsername() {
@@ -37,7 +37,7 @@ function App() {
       <div id={load ? "no-scroll" : "scroll"}>
         <NavBar />
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<MyToolbar />} />
             <Route path="/Login" exact element={<SignIn />}/>
             <Route path="/Blog" element={<Blog />} />
           </Routes>

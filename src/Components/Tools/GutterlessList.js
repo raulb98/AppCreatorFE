@@ -7,14 +7,15 @@ import IconButton from '@mui/material/IconButton';
 
 export default function GutterlessList({data}) {
   return (
-    <List sx={{ width: '85%', maxWidth: 300, bgcolor: 'background.paper' }}>
+    <List sx={{ bgcolor: 'background.paper' }}>
       {Object.keys(data).map((key, index) => (
         <ListItem
           key={key}
           disableGutters
+          sx={{ border: 1, paddingLeft: `20%` }}
         >
-          <ListItemText align="right" primary={`${key}`} />
-          <ListItemText align="right" primary={`${data[key]}`} />
+          <ListItemText primary={`${key}`}/>
+          <ListItemText primary={`${data[key]}`} />
         </ListItem>
       ))}
     </List>
