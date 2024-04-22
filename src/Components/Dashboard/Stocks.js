@@ -21,13 +21,12 @@ function preventDefault(event) {
 export default function Stocks({stock_created, create_stock_trigger}) {
     const [isLoading, setLoading] = React.useState(false);
     
-     console.log(stock_created);
      React.useEffect(() => {
       if((!isLoading && (stocks_row.length == 0)) || (stock_created == true))
       {
        const cookie = new Cookies();
        const token = cookie.get("jwt");
-       const ak = cookie.get('ak');
+       const ak = cookie.get("app_key");
        const fetchDataRead = async () => {
        try{
                const stocks_resp = await BackendService.read_stocks(ak, token);

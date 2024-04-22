@@ -8,13 +8,14 @@ import Stack from '@mui/material/Stack';
 
 function NavBar() {
   const cookie = new Cookies();
-  const email = cookie.get("email");
+  const name = cookie.get("n");
+  const src_path = "static/Avatars/" + name + ".jpg"
 
   const Hello_Message=()=>{
-    if(email){
+    if(name){
       return(
           <Typography color="common.white">
-              Hello, {email}
+              Hello, {name}
           </Typography>
       );
     }
@@ -26,13 +27,14 @@ function NavBar() {
         <Container>
         <Navbar.Brand href="#home">AppCreator Project</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/">Dashboard</Nav.Link>
-            <Nav.Link href="/Login">Login</Nav.Link>
-            <Nav.Link href="/Blog">Blog</Nav.Link>
+            <Nav.Link href="/MainPage">MainPage</Nav.Link>
+            <Nav.Link href="/Dashboard">Dashboard</Nav.Link>
+            <Nav.Link href="/Login">LogIn</Nav.Link>
+            <Nav.Link href="/Signup">SignUp</Nav.Link>
           </Nav>
           <Stack direction="row" spacing={2}>
             <Hello_Message />
-            <Avatar alt="Raul" src="static/Avatars/Raul.jpg" />
+            <Avatar alt={name} src={src_path} />
           </Stack>
         </Container>
       </Navbar>

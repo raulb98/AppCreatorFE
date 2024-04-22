@@ -11,7 +11,7 @@ import Cookies from 'universal-cookie';
 import Paper from '@mui/material/Paper';
 import TableContainer from '@mui/material/TableContainer';
 
-let rows = [];
+let apps_rows = [];
 
 function preventDefault(event) {
     event.preventDefault();
@@ -23,15 +23,18 @@ export default function AppList({my_tab}) {
     React.useEffect(() => {
         const cookie = new Cookies();
         const token = cookie.get("jwt");
-        const username = cookie.get("email");
+        const app_key = cookie.get("app_key");
+        const email = cookie.get("email");
         const fetchData = async () => {
             try {
-                const login_resp = await BackendService.read_apps(username, token);
-                if (login_resp.status == 200) {
+                const app_lists_resp = await BackendService.read_apps(email, app_key, token);
+                if (app_lists_resp.status == 200) {
                     setLoading(true);
-                    rows.push(login_resp.data);
-                    cookie.set("ak", login_resp.data["app_key"]);
-                    console.log(login_resp.data["app_key"]);
+                    if(app_lists_resp != null)
+                    {
+                        if(apps_rows.length == 0) // if we add the option to have multiple apps we should modify this
+                            apps_rows.push(app_lists_resp.data);
+                    }
                 }
             } catch (error) {
                 console.log(error);
@@ -55,7 +58,7 @@ export default function AppList({my_tab}) {
                     </TableHead>
                         <TableBody>
                             {
-                                rows.map((row) => (
+                                apps_rows.map((row) => (
                                     <TableRow>
                                         <TableCell >{row.name}</TableCell>
                                         <TableCell >{row.table_nr}</TableCell>

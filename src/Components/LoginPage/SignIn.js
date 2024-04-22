@@ -24,7 +24,7 @@ function Copyright(props) {
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
             <Link color="inherit" href="https://mui.com/">
-                Your Website
+                AppCreator
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -62,14 +62,15 @@ export default function SignIn() {
                 try {
                     const login_resp = await BackendService.login(
                         userLogindata["email"],
-                        userLogindata["foreign_key"],
                         sha256(userLogindata["password"]).toString()
                     );
                     if (login_resp.status == 200) {
-                        console.log(login_resp.data["foreign_key"]);
-                        cookies.set("fk", userLogindata["foreign_key"]);
+                        console.log(login_resp.data["app_key"]);
+                        cookies.set("app_key", login_resp.data["app_key"]);
                         cookies.set("email", userLogindata["email"]);
                         cookies.set("jwt", login_resp.data["token"]);
+                        cookies.set("p", login_resp.data["permis"]);
+                        cookies.set("n", login_resp.data["name"]);
                         navigate("/");
                     }
                 } catch (error) {
@@ -91,7 +92,7 @@ export default function SignIn() {
                         <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        Log In
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate="noValidate" sx={{ mt: 1}}>
                         <TextField
@@ -130,7 +131,7 @@ export default function SignIn() {
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="/SignUp" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>

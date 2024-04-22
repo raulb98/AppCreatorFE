@@ -12,6 +12,10 @@ export const mainListItems = (
             <ListItemText id="Create Application" primary="Create Application"/>
         </ListItemButton>
         <ListItemButton>
+            <ListItemIcon></ListItemIcon>
+            <ListItemText id="Employee" primary="Employee"/>
+        </ListItemButton>
+        <ListItemButton>
             <ListItemIcon>
                 <DashboardIcon/>
             </ListItemIcon>

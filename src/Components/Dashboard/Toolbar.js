@@ -63,6 +63,10 @@ export default function MyToolbar() {
         {
             setTab(3);
         }
+        if(event.target.innerHTML == "Employee")
+        {
+            setTab(4);
+        }
       } 
 
   return (
