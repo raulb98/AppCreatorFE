@@ -13,6 +13,8 @@ const READ_STOCK_URL = "http://127.0.0.1:8080/read_stock"
 const DELETE_STOCK_URL = "http://127.0.0.1:8080/delete_stock"
 const CREATE_ORDER_URL = "http://127.0.0.1:8080/create_order"
 const READ_ORDER_URL = "http://127.0.0.1:8080/read_order"
+const CREATE_EMPLOYEE_URL = "http://127.0.0.1:8080/create_employee"
+const READ_EMPLOYEES_URL = "http://127.0.0.1:8080/read_employees"
 
 class BackendService {
 
@@ -29,10 +31,9 @@ class BackendService {
         });
     };
 
-    login(this_username, this_user_key, this_sha_pass) {
+    login(this_username, this_sha_pass) {
         return axios.post(LOGIN_URL, {
             email: this_username,
-            foreign_key: this_user_key,
             password: this_sha_pass
         }, {
             headers: {
@@ -41,9 +42,21 @@ class BackendService {
         });
     };
 
-    read_apps(this_username, this_token) {
+    create_client(this_email, this_password, this_name){
+        return axios.post(CREATE_CLIENT_URL, {
+            email: this_email,
+            password: this_password,
+            name: this_name,
+            perms: "admin"
+        }, {
+            'Content-Type': 'multipart/json'
+        });
+    }
+    
+    read_apps(this_email, this_app_key, this_token) {
         return axios.post(READ_APPS_URL, {
-            email: this_username
+            email: this_email,
+            app_key: this_app_key
         }, {
             headers: {
                 'Content-Type': 'multipart/json',
@@ -52,10 +65,10 @@ class BackendService {
         });
     };
 
-    create_order(this_app_key, this_intermediate, this_order, this_token) {
+    create_order(this_app_key, this_emp_eml, this_order, this_token) {
         return axios.post(CREATE_ORDER_URL, {
             app_key: this_app_key,
-            intermediate: this_intermediate,
+            emp_eml: this_emp_eml,
             order: this_order
         }, {
             headers: {
@@ -65,9 +78,10 @@ class BackendService {
         });
     };
 
-    read_orders(this_app_key, this_token) {
+    read_orders(this_app_key, this_emp_eml, this_token) {
         return axios.post(READ_ORDER_URL, {
-            app_key: this_app_key
+            app_key: this_app_key,
+            emp_eml: this_emp_eml
         }, {
             headers: {
                 'Content-Type': 'multipart/json',
@@ -97,6 +111,49 @@ class BackendService {
                 'Authorization': 'Bearer ' + this_token
             }
         });
+    }
+
+    create_employee(this_app_key, this_emp_email, this_emp_password, this_emp_name, this_perm, this_token){
+        return axios.post(CREATE_EMPLOYEE_URL, {
+            app_key: this_app_key,
+            email: this_emp_email,
+            password: this_emp_password,
+            name : this_emp_name,
+            token: this_token,
+            perms: this_perm
+        }, {
+            headers: {
+                'Content-Type': 'multipart/json',
+                'Authorization': 'Bearer ' + this_token
+            }
+        })
+    }
+
+    read_employees(this_app_key, this_token){
+        return axios.get(READ_EMPLOYEES_URL, {
+            params: {
+                app_key: this_app_key
+            }
+        }, {
+            headers: {
+                'Content-Type': 'multipart/json',
+                'Authorization': 'Bearer ' + this_token
+            }
+        })
+    }
+
+    delete_employee(this_app_key, this_emp_email, this_token){
+        return axios.delete(DELETE_USER_URL, {
+        data : {
+                app_key: this_app_key,
+                email: this_emp_email
+               }
+        }, {
+            headers: {
+                'Content-Type': 'multipart/json',
+                'Authorization': 'Bearer ' + this_token
+            }
+        })
     }
 };
 

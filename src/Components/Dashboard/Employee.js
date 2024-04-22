@@ -12,46 +12,37 @@ import Paper from '@mui/material/Paper';
 import TableContainer from '@mui/material/TableContainer';
 import { Button } from '@mui/material';
 import GutterlessList from '../Tools/GutterlessList';
-import DeleteOrder from './DeleteOrder';
 
-let orders_row = [];
+let employees_row = [];
 
 function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Orders({my_tab}) {
+export default function Employees({employee_created, create_employee_trigger}) {
     const [isLoading, setLoading] = React.useState(false);
-     
+
      React.useEffect(() => {
       if(!isLoading)
       {
        const cookie = new Cookies();
        const token = cookie.get("jwt");
        const ak = cookie.get("app_key");
-       const permissions = cookie.get("p");
-       const name = cookie.get("n");
-
        const fetchDataRead = async () => {
        try{
-            let order_resp;
-            if(permissions == 0)
-            {
-              order_resp = await BackendService.read_orders(ak, "", token);
-            }  
-            else
-            {
-              order_resp = await BackendService.read_orders(ak, name, token);
-            }
-            if(order_resp.status == 200)
-            {
-              setLoading(true);
-              if(orders_row != null)
-              {
-                orders_row = Object.keys(order_resp.data)
-                              .map(key => order_resp.data[key]);
-              }
-            }
+               const employee_resp = await BackendService.read_employees(ak, token);
+               if(employee_resp.status == 200)
+               {
+                  create_employee_trigger();
+                   setLoading(true);
+                   if(employees_row != null)
+                   {
+                      employees_row = Object.keys(employee_resp.data)
+                                    .map(key => employee_resp.data[key]);
+                   }
+                   console.log(employees_row);
+               }
+
          }catch( error ){ console.log(error); }
          };
          fetchDataRead().then();
@@ -59,31 +50,23 @@ export default function Orders({my_tab}) {
    }, [isLoading]);
 
   
-  if(isLoading && (my_tab == 3))
+  if(isLoading)
   {
     return (
       <React.Fragment>
-        <Title>Orders</Title>
+        <Title>Employees</Title>
         <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table aria-label="simple table">
         <TableHead>
             <TableRow>
-              <TableCell align="right">Intermediate</TableCell>
-              <TableCell align="right">Timestamp</TableCell>
-              <TableCell align="right">Finished</TableCell>
-              <TableCell align="right">Display Order</TableCell>
-
+              <TableCell>Employee Name</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
               {
-                  orders_row.map((row) => (
+                  employees_row.map((row) => (
                     <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                        <TableCell align="right">{row[1]}</TableCell>
-                        <TableCell align="right">{row[3]}</TableCell>
-                        <TableCell align="right">{row[2]}</TableCell>
-                        <TableCell align="right"><GutterlessList data={row[4]}/></TableCell>
-                        <DeleteOrder email={row[1]}/>
+                        <TableCell>{row}</TableCell>
                     </TableRow>
                     ))
               }

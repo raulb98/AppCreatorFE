@@ -40,14 +40,13 @@ export default function OrdersDisplayForm({my_tab}) {
     };
 
     const handleAlertClose = (event, reason) => {
-        console.log("Aici22!!!");
         setAlertOpen(false);
     };
 
      React.useEffect(() => {
         const cookie = new Cookies();
         const token = cookie.get("jwt");
-        const ak = cookie.get('ak');
+        const ak = cookie.get('app_key');
         if (isSubmit) {
         const fetchData = async () => {
         try{
@@ -67,7 +66,6 @@ export default function OrdersDisplayForm({my_tab}) {
                 else if(order_resp.status == 201)
                 {
                     setIsSubmit(false);
-                    console.log("Aici!!");
                     setAlertMessage("Something went bad!");
                     setAlertOpen(true);
                     setAlertSeverity('error');
@@ -87,7 +85,7 @@ export default function OrdersDisplayForm({my_tab}) {
                 id="orderTab"
                 className="mb-3"
             >
-                <Tab eventKey="OrderCreate" title="OrderCreateButton">
+                <Tab eventKey="OrderCreate" title="Create Order">
                     <Form>
                         { alertOpen == true ?
                             <Alert
@@ -103,10 +101,10 @@ export default function OrdersDisplayForm({my_tab}) {
                         <TextField
                                 required
                                 fullWidth
-                                id="Intermediate"
-                                label="Intermediate"
-                                name="Intermediate"
-                                type="Intermediate"
+                                id="Email Employee"
+                                label="Email Employee"
+                                name="Email Employee"
+                                type="Email Employee"
                                 margin='normal'
                                 inputRef={intermediate}
                                 color={"info"}

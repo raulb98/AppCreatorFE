@@ -46,7 +46,7 @@ export default function StocksDisplayForm({create_stock_trigger}) {
      React.useEffect(() => {
         const cookie = new Cookies();
         const token = cookie.get("jwt");
-        const ak = cookie.get('ak');
+        const ak = cookie.get("app_key");
         if (isSubmit) {
         const fetchData = async () => {
         try{

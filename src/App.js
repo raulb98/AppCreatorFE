@@ -8,20 +8,13 @@ import {
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './Components/Navbar';
-import Blog from './Components/Blog/Blog'
+import MainPage from './Components/Blog/Blog'
 import SignIn from './Components/LoginPage/SignIn';
 import MyToolbar from './Components/Dashboard/Toolbar';
-import Cookies from 'universal-cookie';
-
-function getUsername() {
-  const cookie = new Cookies();
-  const email = cookie.get("email");
-  return email;
-}
+import SignUp from './Components/SignupPage/SignUp';
 
 function App() {
   const [load, upadateLoad] = useState(null);
-  const email = getUsername();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -37,9 +30,10 @@ function App() {
       <div id={load ? "no-scroll" : "scroll"}>
         <NavBar />
           <Routes>
-            <Route path="/" element={<MyToolbar />} />
+            <Route path="/MainPage" element={<MainPage />} />
+            <Route path="/Dashboard" element={<MyToolbar />} />
             <Route path="/Login" exact element={<SignIn />}/>
-            <Route path="/Blog" element={<Blog />} />
+            <Route path="/Signup" exact element={<SignUp />}/>
           </Routes>
       </div>
     </Router>

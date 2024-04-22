@@ -12,6 +12,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import PropTypes from 'prop-types';
+import {useState} from 'react';
+import sha256 from "crypto-js/sha256";
+import {useNavigate} from "react-router-dom";
+import BackendService from "../../Services/Services"
+import Cookies from 'universal-cookie';
 
 function Copyright(props) {
     return (
@@ -26,16 +32,48 @@ function Copyright(props) {
     );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
+
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+    const [isSubmit, setIsSubmit] = React.useState(false);
+    const [userSignUpdata, setSignUpData] = React.useState(
+        {password: "", email: "", name: ""}
+    );
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({email: data.get('email'), password: data.get('password')});
+        setIsSubmit(true);
     };
+
+    const handleChange = async (event) => {
+        const value = event.target.value;
+        setSignUpData({
+            ...userSignUpdata,
+            [event.target.name]: value
+        })
+    };
+
+    React.useEffect(() => {
+        if (isSubmit) {
+            const fetchData = async () => {
+                try {
+                    const sign_up_resp = await BackendService.create_client(
+                        userSignUpdata["email"],
+                        sha256(userSignUpdata["password"]).toString(),
+                        userSignUpdata["name"],
+                    );
+                    if (sign_up_resp.status == 200) {
+                        console.log(sign_up_resp);
+                    }
+                } catch (error) {
+                    setIsSubmit(false);
+                }
+            };
+            fetchData().then();
+        }
+    }, [isSubmit]);
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -66,24 +104,16 @@ export default function SignUp() {
                             mt: 3
                         }}>
                         <Grid container="container" spacing={2}>
-                            <Grid item="item" xs={12} sm={6}>
+                            <Grid item="item" xs={12}>
                                 <TextField
                                     autoComplete="given-name"
-                                    name="firstName"
+                                    name="name"
                                     required="required"
                                     fullWidth="fullWidth"
-                                    id="firstName"
+                                    id="name"
                                     label="First Name"
+                                    onChange={(event) => handleChange(event)}
                                     autoFocus="autoFocus"/>
-                            </Grid>
-                            <Grid item="item" xs={12} sm={6}>
-                                <TextField
-                                    required="required"
-                                    fullWidth="fullWidth"
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
-                                    autoComplete="family-name"/>
                             </Grid>
                             <Grid item="item" xs={12}>
                                 <TextField
@@ -92,6 +122,7 @@ export default function SignUp() {
                                     id="email"
                                     label="Email Address"
                                     name="email"
+                                    onChange={(event) => handleChange(event)}
                                     autoComplete="email"/>
                             </Grid>
                             <Grid item="item" xs={12}>
@@ -102,12 +133,8 @@ export default function SignUp() {
                                     label="Password"
                                     type="password"
                                     id="password"
+                                    onChange={(event) => handleChange(event)}
                                     autoComplete="new-password"/>
-                            </Grid>
-                            <Grid item="item" xs={12}>
-                                <FormControlLabel
-                                    control={<Checkbox value = "allowExtraEmails" color = "primary" />}
-                                    label="I want to receive inspiration, marketing promotions and updates via email."/>
                             </Grid>
                         </Grid>
                         <Button
@@ -129,9 +156,6 @@ export default function SignUp() {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{
-                        mt: 5
-                    }}/>
             </Container>
         </ThemeProvider>
     );
