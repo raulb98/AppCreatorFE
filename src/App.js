@@ -8,10 +8,10 @@ import {
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './Components/Navbar';
-import MainPage from './Components/Blog/Blog'
+import MainPage from './Components/Blog/Blog';
 import SignIn from './Components/LoginPage/SignIn';
 import MyToolbar from './Components/Dashboard/Toolbar';
-import SignUpUser from './Components/SignupPage/SignUp';
+import SignUpUser from './Components/SignupPage/signup';
 
 function App() {
   const [load, upadateLoad] = useState(null);
