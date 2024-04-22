@@ -11,7 +11,7 @@ import NavBar from './Components/Navbar';
 import MainPage from './Components/Blog/Blog'
 import SignIn from './Components/LoginPage/SignIn';
 import MyToolbar from './Components/Dashboard/Toolbar';
-import SignUp from './Components/SignupPage/SignUp';
+import SignUpUser from './Components/SignupPage/SignUp';
 
 function App() {
   const [load, upadateLoad] = useState(null);
@@ -33,7 +33,7 @@ function App() {
             <Route path="/MainPage" element={<MainPage />} />
             <Route path="/Dashboard" element={<MyToolbar />} />
             <Route path="/Login" exact element={<SignIn />}/>
-            <Route path="/Signup" exact element={<SignUp />}/>
+            <Route path="/Signup" exact element={<SignUpUser />}/>
           </Routes>
       </div>
     </Router>
