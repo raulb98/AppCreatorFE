@@ -1,11 +1,9 @@
 import * as React from 'react';
-import Employees from './Employee';
-import EmployeesDisplayForm from './Employees_Display_Form';
 import { Grid } from '@mui/material';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
-import DeleteEmployee from './DeleteEmployee';
-
+import Orders from './Orders';
+import OrdersDisplayForm from './Orders_Display_Form';
 
 function preventDefault(event) {
   event.preventDefault();
@@ -18,27 +16,31 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
   }));
 
-export default function DisplayEmployeeTabs({my_tab}) {
-  const [employee_created, set_employee_created] = React.useState(false);
+export default function DisplayOrdersPage({my_tab}) {
+  const [order_created, set_order_created] = React.useState(false);
   
-  const handleCreatedEmployeeTrigger = () => {
-    set_employee_created(prevState => !prevState);
+  const handleCreatedOrderTrigger = () => {
+    set_order_created(prevState => !prevState);
   };
 
-  if(my_tab == 4)
+  if(my_tab == 3)
   {
     return (
             <Grid container spacing={2} direction="row">
                 <Grid container spacing={2} direction="column" xs={5}>
                     <Grid item>
                         <Item>
-                            <EmployeesDisplayForm create_employee_trigger={handleCreatedEmployeeTrigger}/>
+                            <OrdersDisplayForm create_order_trigger={handleCreatedOrderTrigger}/>
+                        </Item>
+                    </Grid>
+                    <Grid item>
+                        <Item>
                         </Item>
                     </Grid>
                 </Grid>
                 <Grid item xs={7}>
                     <Item>
-                        <Employees employee_created={employee_created} create_employee_trigger={handleCreatedEmployeeTrigger}/> 
+                        <Orders my_tab={my_tab} order_created={order_created} create_order_trigger={handleCreatedOrderTrigger}/> 
                     </Item>
                 </Grid>
             </Grid>

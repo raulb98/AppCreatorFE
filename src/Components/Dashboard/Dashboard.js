@@ -6,11 +6,13 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import AppList from './AppList';
 import Orders from './Orders';
+import { Box } from '@mui/material';
 import Cookies from 'universal-cookie';
 import OrdersDisplayForm from './Orders_Display_Form';
 import DisplayCreateTabs from './DisplayCreateTabs';
 import DisplayStocksPage from './DisplayStocksPage';
 import DisplayEmployeeTabs from './DisplayEmployeePage'
+import DisplayOrdersPage from './DisplayOrdersPage';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -25,7 +27,8 @@ export default function Dashboard({tab}) {
   const permissions = cookie.get("p");
 
   return (
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Box display="flex" alignItems="center">
+          <Container maxWidth="false" sx={{ mt: "1%", mb: "2%", ml: "10%", mr: "10%" }}>
 {permissions == 0 ? 
             <Grid container spacing={2}>
               <Grid item xs={8}>
@@ -38,20 +41,15 @@ export default function Dashboard({tab}) {
               </Grid>
            </Grid>
 : null} 
-              <Grid container spacing={2}>
-                <Orders my_tab={tab}/>
-                <Grid item xs={5} md={10}>
-                  <OrdersDisplayForm my_tab={tab}/>
-                </Grid>
-              </Grid>
+           <DisplayOrdersPage my_tab={tab}/>
 {permissions == 0 ? 
-              <DisplayStocksPage my_tab={tab}/>
+           <DisplayStocksPage my_tab={tab}/>
 : null}
 
 {permissions == 0 ? 
-
-              <DisplayEmployeeTabs my_tab={tab}/>
+          <DisplayEmployeeTabs my_tab={tab}/>
 :null}
       </Container>
+      </Box>
   );
 };
