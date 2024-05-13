@@ -15,6 +15,8 @@ const CREATE_ORDER_URL = "http://127.0.0.1:8080/create_order"
 const READ_ORDER_URL = "http://127.0.0.1:8080/read_order"
 const CREATE_EMPLOYEE_URL = "http://127.0.0.1:8080/create_employee"
 const READ_EMPLOYEES_URL = "http://127.0.0.1:8080/read_employees"
+const UPDATE_EMPLYEE_URL = "http://127.0.0.1:8080/update_client"
+const DELETE_ORDER_URL = "http://127.0.0.1:8080/delete_order"
 
 class BackendService {
 
@@ -149,6 +151,35 @@ class BackendService {
                 email: this_emp_email
                }
         }, {
+            headers: {
+                'Content-Type': 'multipart/json',
+                'Authorization': 'Bearer ' + this_token
+            }
+        })
+    }
+
+    update_employee(this_emp_email, this_emp_name, this_emp_permis, this_token){
+        return axios.post(UPDATE_EMPLYEE_URL, {
+            email: this_emp_email,
+            name: this_emp_name,
+            permis: this_emp_permis
+        }, {
+            headers: {
+                'Content-Type': 'multipart/json',
+                'Authorization': 'Bearer ' + this_token
+            }
+        })
+    }
+
+    delete_order(this_app_key, this_order_id, this_emp_permis, this_order, this_token){
+        return axios.delete(DELETE_ORDER_URL, {
+            data : {
+                    ak: this_app_key,
+                    order_id: this_order_id,
+                    permis: this_emp_permis,
+                    order: this_order
+                }
+            }, {
             headers: {
                 'Content-Type': 'multipart/json',
                 'Authorization': 'Bearer ' + this_token

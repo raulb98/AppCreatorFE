@@ -27,7 +27,7 @@ export default function DisplayStocksPage({my_tab}) {
   {
     return (
             <Grid container spacing={2} direction="row">
-                <Grid container spacing={2} direction="column" xs={5}>
+                <Grid container spacing={2} direction="column" xs={3}>
                     <Grid item>
                         <Item>
                             <StocksDisplayForm create_stock_trigger={handleCreatedStockTrigger}/>
@@ -38,7 +38,7 @@ export default function DisplayStocksPage({my_tab}) {
                         </Item>
                     </Grid>
                 </Grid>
-                <Grid item xs={7}>
+                <Grid item>
                     <Item>
                         <Stocks stock_created={stock_created} create_stock_trigger={handleCreatedStockTrigger}/> 
                     </Item>

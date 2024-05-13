@@ -7,7 +7,7 @@ import Cookies from 'universal-cookie';
 import { TextField, Alert } from '@mui/material';
 import BackendService from "../../Services/Services";
 
-export default function OrdersDisplayForm({my_tab}) {
+export default function OrdersDisplayForm({my_tab, order_created, create_order_trigger}) {
     const [isSubmit, setIsSubmit] = React.useState(false);
     const [inputFields, setInputFields] = React.useState([
         { Item: '', Quantity: '' }
@@ -78,7 +78,7 @@ export default function OrdersDisplayForm({my_tab}) {
 
     const cookie = new Cookies();
     const token = cookie.get("jwt");
-    if(token && (my_tab == 3)){
+    if(token){
       return(
             <Tabs
                 defaultActiveKey="profile"

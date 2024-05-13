@@ -11,7 +11,7 @@ import NavBar from './Components/Navbar';
 import MainPage from './Components/Blog/Blog';
 import SignIn from './Components/LoginPage/SignIn';
 import MyToolbar from './Components/Dashboard/Toolbar';
-import SignUpUser from './Components/SignupPage/signup';
+import SignUpUser from './Components/SignupPage/SignUp';
 
 function App() {
   const [load, upadateLoad] = useState(null);
