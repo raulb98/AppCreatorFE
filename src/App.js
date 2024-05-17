@@ -36,9 +36,9 @@ function App() {
             <Route path="/MainPage" element={<MainPage />} />
             <Route path="/Dashboard" element={<MyToolbar />} />
             {name ? 
-            <Route path="/Log In" exact element={<SignIn />}/> 
+            <Route path="/Login" exact element={<SignIn />}/> 
             : 
-            <Route path="/Log Out" exact element={<SignIn />}/>
+            <Route path="/Logout" exact element={<SignIn />}/>
             }
             <Route path="/Signup" exact element={<SignUpUser />}/>
           </Routes>
