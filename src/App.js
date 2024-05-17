@@ -12,8 +12,11 @@ import MainPage from './Components/Blog/Blog';
 import SignIn from './Components/LoginPage/SignIn';
 import MyToolbar from './Components/Dashboard/Toolbar';
 import SignUpUser from './Components/SignupPage/signup';
+import Cookies from 'universal-cookie';
 
 function App() {
+  const cookie = new Cookies();
+  const name = cookie.get("n");
   const [load, upadateLoad] = useState(null);
 
   useEffect(() => {
@@ -32,7 +35,11 @@ function App() {
           <Routes>
             <Route path="/MainPage" element={<MainPage />} />
             <Route path="/Dashboard" element={<MyToolbar />} />
-            <Route path="/Login" exact element={<SignIn />}/>
+            {name ? 
+            <Route path="/Log In" exact element={<SignIn />}/> 
+            : 
+            <Route path="/Log Out" exact element={<SignIn />}/>
+            }
             <Route path="/Signup" exact element={<SignUpUser />}/>
           </Routes>
       </div>
