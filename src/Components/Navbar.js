@@ -29,8 +29,11 @@ function NavBar() {
           <Nav className="me-auto">
             <Nav.Link href="/MainPage">MainPage</Nav.Link>
             <Nav.Link href="/Dashboard">Dashboard</Nav.Link>
-            <Nav.Link href="/Login">LogIn</Nav.Link>
+            {name ?
             <Nav.Link href="/Logout">LogOut</Nav.Link>
+            : 
+            <Nav.Link href="/Login">LogIn</Nav.Link>
+            }
             <Nav.Link href="/Signup">SignUp</Nav.Link>
           </Nav>
           <Stack direction="row" spacing={2}>
