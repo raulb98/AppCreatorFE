@@ -35,10 +35,10 @@ function App() {
           <Routes>
             <Route path="/MainPage" element={<MainPage />} />
             <Route path="/Dashboard" element={<MyToolbar />} />
-            {name ? 
-            <Route path="/Login" exact element={<SignIn />}/> 
+            {name ?
+            <Route path="/Logout" exact element={<SignIn />}/> 
             : 
-            <Route path="/Logout" exact element={<SignIn />}/>
+            <Route path="/Login" exact element={<SignIn />}/> 
             }
             <Route path="/Signup" exact element={<SignUpUser />}/>
           </Routes>
