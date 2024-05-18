@@ -106,7 +106,7 @@ export default function Stocks({stock_created, create_stock_trigger}) {
                           if(marked.indexOf(key) == -1)
                           {
                             marked.push(key);
-                            chart_lines_arr.push(val);
+                            chart_lines_arr = [val].concat(chart_lines_arr);
                           }
                         }
                         
