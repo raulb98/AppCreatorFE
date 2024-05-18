@@ -111,6 +111,8 @@ export default function Stocks({stock_created, create_stock_trigger}) {
                         }
                         
                         console.log(chart_lines_arr);
+                        console.log(chart_lines_arr);                        
+                        console.log(chart_lines_arr);
                         setStocks(stocks_row);
                    }
                    console.log(stocks_row);
