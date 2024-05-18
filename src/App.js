@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './Components/Navbar';
 import MainPage from './Components/Blog/Blog';
 import SignIn from './Components/LoginPage/SignIn';
+import SignOut from './Components/LoginPage/SignOut';
 import MyToolbar from './Components/Dashboard/Toolbar';
 import SignUpUser from './Components/SignupPage/signup';
 import Cookies from 'universal-cookie';
@@ -36,7 +37,7 @@ function App() {
             <Route path="/MainPage" element={<MainPage />} />
             <Route path="/Dashboard" element={<MyToolbar />} />
             {name ?
-            <Route path="/Logout" exact element={<SignIn />}/> 
+            <Route path="/Logout" exact element={<SignOut />}/> 
             : 
             <Route path="/Login" exact element={<SignIn />}/> 
             }
