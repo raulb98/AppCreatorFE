@@ -68,6 +68,8 @@ export default function Stocks({stock_created, create_stock_trigger}) {
                const stocks_resp = await BackendService.read_stocks(ak, token);
                if(stocks_resp.status == 200)
                {
+                   chart_lines_arr = [];
+                   chart_lines = [];
                    setLoading(true);
                    create_stock_trigger();
                    if(stocks_resp != null)
