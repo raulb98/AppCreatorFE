@@ -58,7 +58,7 @@ export default function Stocks({stock_created, create_stock_trigger}) {
     ];
 
      React.useEffect(() => {
-      if(!isLoading || stock_created)
+      if(!isLoading)
       {
        const cookie = new Cookies();
        const token = cookie.get("jwt");
