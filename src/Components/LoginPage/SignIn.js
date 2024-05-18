@@ -71,7 +71,7 @@ export default function SignIn() {
                         cookies.set("jwt", login_resp.data["token"]);
                         cookies.set("p", login_resp.data["permis"]);
                         cookies.set("n", login_resp.data["name"]);
-                        navigate("/");
+                        navigate("/Dashboard");
                     }
                 } catch (error) {
                     setIsSubmit(false);
