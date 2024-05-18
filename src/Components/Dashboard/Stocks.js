@@ -96,7 +96,7 @@ export default function Stocks({stock_created, create_stock_trigger}) {
                             }
                             else
                             {
-                              chart_lines[key]['data'].push(val);
+                              chart_lines[key]['data'] = [val].concat(chart_lines[key]['data']);
                             }
                           }
                         }
@@ -106,13 +106,10 @@ export default function Stocks({stock_created, create_stock_trigger}) {
                           if(marked.indexOf(key) == -1)
                           {
                             marked.push(key);
-                            console.log(val);
-                            chart_lines_arr = [val].concat(chart_lines_arr);
+                            chart_lines_arr.push(val);
                           }
                         }
-
-                        console.log(chart_lines_arr);
-                        console.log(chart_lines_arr);                        
+                        
                         console.log(chart_lines_arr);
                         setStocks(stocks_row);
                    }
