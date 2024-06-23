@@ -38,11 +38,12 @@ const DELETE_ORDER_URL = "https://paj7cgiu44.execute-api.eu-north-1.amazonaws.co
 
 class BackendService {
 
-    create_app(this_email, this_app_name, this_description, this_token) {
+    create_app(this_email, this_app_name, this_description, this_cif, this_token) {
         return axios.post(CREATE_APP_URL, {
             email: this_email,
             desc: this_description,
-            app_name: this_app_name
+            app_name: this_app_name,
+            cif: this_cif
         }, {
             headers: {
                 'Content-Type': 'multipart/json',

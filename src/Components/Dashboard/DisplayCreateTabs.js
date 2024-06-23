@@ -12,6 +12,7 @@ export default function DisplayCreateTabs({tab}) {
     const [isSubmit, setIsSubmit] = React.useState(false);
     const app_name = useRef(null);
     const description = useRef(null);
+    const cif = useRef(null);
 
     const handleAppsClick = (event) => {
         event.preventDefault();
@@ -25,7 +26,7 @@ export default function DisplayCreateTabs({tab}) {
         if (isSubmit) {
           const fetchData = async () => {
           try{
-                const login_resp = await BackendService.create_app(email, app_name.current.value, description.current.value, token);
+                const login_resp = await BackendService.create_app(email, app_name.current.value, description.current.value, cif.current.value, token);
                 if(login_resp.status == 200)
                 {
                     setIsSubmit(false);
@@ -67,6 +68,17 @@ export default function DisplayCreateTabs({tab}) {
                                 type="Description"
                                 margin='normal'
                                 inputRef={description}
+                                color={"info"}
+                            />
+                            <TextField
+                                required
+                                fullWidth
+                                id="CIF"
+                                label="Company CIF"
+                                name="Company CIF"
+                                type="Company CIF"
+                                margin='normal'
+                                inputRef={cif}
                                 color={"info"}
                             />
                         <Button variant="primary" type="submit">

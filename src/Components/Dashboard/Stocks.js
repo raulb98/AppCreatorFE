@@ -58,7 +58,7 @@ export default function Stocks({stock_created, create_stock_trigger}) {
     ];
 
      React.useEffect(() => {
-      if(!isLoading || stock_created)
+      if(!isLoading)
       {
        const cookie = new Cookies();
        const token = cookie.get("jwt");
@@ -68,6 +68,8 @@ export default function Stocks({stock_created, create_stock_trigger}) {
                const stocks_resp = await BackendService.read_stocks(ak, token);
                if(stocks_resp.status == 200)
                {
+                   chart_lines_arr = [];
+                   chart_lines = [];
                    setLoading(true);
                    create_stock_trigger();
                    if(stocks_resp != null)
@@ -96,7 +98,7 @@ export default function Stocks({stock_created, create_stock_trigger}) {
                             }
                             else
                             {
-                              chart_lines[key]['data'].push(val);
+                              chart_lines[key]['data'] = [val].concat(chart_lines[key]['data']);
                             }
                           }
                         }
@@ -109,8 +111,6 @@ export default function Stocks({stock_created, create_stock_trigger}) {
                             chart_lines_arr.push(val);
                           }
                         }
-                        
-                        console.log(chart_lines_arr);
                         setStocks(stocks_row);
                    }
                    console.log(stocks_row);
@@ -162,7 +162,7 @@ export default function Stocks({stock_created, create_stock_trigger}) {
       <React.Fragment >
         <Title>Stocks</Title>
         <TableContainer component={Paper}>
-        <Table aria-label="simple table">
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
             <TableRow>
             </TableRow>
