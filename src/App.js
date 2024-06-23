@@ -12,7 +12,7 @@ import MainPage from './Components/Blog/Blog';
 import SignIn from './Components/LoginPage/SignIn';
 import SignOut from './Components/LoginPage/SignOut';
 import MyToolbar from './Components/Dashboard/Toolbar';
-import SignUpUser from './Components/SignupPage/SignUp';
+import SignUpUser from './Components/SignupPage/signUp';
 import Cookies from 'universal-cookie';
 
 function App() {
