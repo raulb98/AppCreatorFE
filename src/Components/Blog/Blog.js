@@ -32,9 +32,7 @@ const featuredPosts = [
     title: 'Website Under Development',
     date: 'May 18',
     description:
-      'ERP support already made. Looking forward for EFactura Integration',
-    image: 'https://www.google.com/search?sca_esv=2e47e62a151241ca&sxsrf=ADLYWIKmDsQ3NkOflnA-4KQIZG-8IjqrHg:1716026409926&q=EFactura&uds=ADvngMjTirQl6rUn_0xbjWZjLsFVSjSIHuPDo6HJURblNI6UEkugUw-H9H5IDY97GyPUyLNe7pTogc2gx97jZcZBzDv1JXLeK8rbw7UHdYYGzRZd2FGB0GyFYgBNQgYxYcEBtsh32Cf709jN-HFTC_qGk1eG8LJDlrNwsmFUtFcsj1zF5Fh1y9TAilE5Z9tWaZkVgJG75m8DxouS0pTm0FD6I_8nVKSaEbCcGiiDOw9sWSIapCKxA4VG1H63U6s6zzi5coZ9gwlLNbs_Mx_TOqxd3lJxket1rA&udm=2&prmd=invbz&sa=X&ved=2ahUKEwibyNrE-JaGAxUggv0HHcaMChYQtKgLegQIFxAB&biw=1536&bih=858&dpr=1.25#vhid=7atkI6880Mj3fM&vssid=mosaic',
-    imageLabel: 'Image Text',
+      'ERP support already made. Looking forward for EFactura Integration'
   }
 ];
 
@@ -70,7 +68,7 @@ export default function Blog() {
             ))}
           </Grid>
           <Grid container spacing={5} sx={{ mt: 3 }}>
-            <Main title="From the firehose" posts={posts} />
+            <Main title="New Posts" posts={posts} />
             <Sidebar
               title={sidebar.title}
               description={sidebar.description}
