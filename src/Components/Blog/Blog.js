@@ -32,7 +32,7 @@ const featuredPosts = [
     title: 'Website Under Development',
     date: 'May 18',
     description:
-      'ERP support already made. Looking forward for EFactura Integration',
+      'ERP support already made. Looking forward for EFactura Integration'
   }
 ];
 
